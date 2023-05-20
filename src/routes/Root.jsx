@@ -1,12 +1,17 @@
 import React from "react";
-import { Outlet, Link, useLoaderData } from "react-router-dom";
-import { getContacts } from "../contacts.js";
+import { Outlet, Link, useLoaderData, Form } from "react-router-dom";
+import { getContacts, createContact } from "../contacts.js";
 
 const loader = async () => {
   const contacts = await getContacts();
   console.log({ contacts });
   return { contacts };
 };
+
+const action = async () => {
+    const contact = await createContact();
+    return {contact};
+}
 
 const Root = () => {
   const { contacts } = useLoaderData();
@@ -26,9 +31,9 @@ const Root = () => {
             <div id="search-spinner" aria-hidden hidden={true} />
             <div className="sr-only" aria-live="polite"></div>
           </form>
-          <form method="post">
+          <Form method="post">
             <button type="submit">New</button>
-          </form>
+          </Form>
         </div>
         <nav>
           {contacts.length ? (
@@ -62,4 +67,4 @@ const Root = () => {
   );
 };
 
-export { Root as default, loader };
+export { Root as default, loader, action };
