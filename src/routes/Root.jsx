@@ -1,5 +1,5 @@
 import React from "react";
-import { Outlet, Link, useLoaderData, Form } from "react-router-dom";
+import { Outlet, Link, useLoaderData, Form, redirect } from "react-router-dom";
 import { getContacts, createContact } from "../contacts.js";
 
 const loader = async () => {
@@ -10,7 +10,7 @@ const loader = async () => {
 
 const action = async () => {
     const contact = await createContact();
-    return {contact};
+    return redirect(`/contacts/${contact.id}/edit`);
 }
 
 const Root = () => {
