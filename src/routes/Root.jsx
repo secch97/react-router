@@ -2,9 +2,10 @@ import React from "react";
 import { Outlet, NavLink, useLoaderData, useNavigation, Form, redirect } from "react-router-dom";
 import { getContacts, createContact } from "../contacts.js";
 
-const loader = async () => {
-  const contacts = await getContacts();
-  console.log({ contacts });
+const loader = async ({request}) => {
+  const url = new URL(request.url);
+  const q = url.searchParams.get("q");
+  const contacts = await getContacts(q);
   return { contacts };
 };
 
@@ -21,7 +22,7 @@ const Root = () => {
       <div id="sidebar">
         <h1>React Router Contacts: </h1>
         <div>
-          <form id="search-form" role="search">
+          <Form id="search-form" role="search">
             <input
               id="q"
               aria-label="Search contacts"
@@ -31,7 +32,7 @@ const Root = () => {
             />
             <div id="search-spinner" aria-hidden hidden={true} />
             <div className="sr-only" aria-live="polite"></div>
-          </form>
+          </Form>
           <Form method="post">
             <button type="submit">New</button>
           </Form>
