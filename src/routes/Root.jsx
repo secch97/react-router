@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Outlet, NavLink, useLoaderData, useNavigation, Form, redirect } from "react-router-dom";
+import { Outlet, NavLink, useLoaderData, useNavigation, Form, redirect, useSubmit } from "react-router-dom";
 import { getContacts, createContact } from "../contacts.js";
 
 const loader = async ({request}) => {
@@ -17,6 +17,7 @@ const action = async () => {
 const Root = () => {
   const { contacts, q } = useLoaderData();
   const navigation = useNavigation();
+  const submit = useSubmit();
 
   useEffect(()=>{
     document.getElementById("q").value = q;
@@ -35,6 +36,7 @@ const Root = () => {
               type="search"
               name="q"
               defaultValue={q}
+              onChange={(event)=>{submit(event.currentTarget.form)}}
             />
             <div id="search-spinner" aria-hidden hidden={true} />
             <div className="sr-only" aria-live="polite"></div>
