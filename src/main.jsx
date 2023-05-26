@@ -23,15 +23,20 @@ const router = createBrowserRouter([
     action: rootAction,
     children: [
       {
-        index: true,
-        element: <Index/>
-      },
-      {
-        path: "contacts/:contactId",
-        element: <Contact></Contact>,
-        loader: contactLoader,
-        action: contactAction
-      },
+        errorElement: <ErrorPage></ErrorPage>,
+        children: [
+          {
+            index: true,
+            element: <Index></Index>
+          },
+          {
+            path: "contacts/:contactId",
+            element: <Contact></Contact>,
+            loader: contactLoader,
+            action: contactAction
+          },
+        ]
+      },   
       {
         path: "contacts/:contactId/edit",
         element: <EditContact></EditContact>,
